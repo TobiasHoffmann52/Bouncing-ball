@@ -1,14 +1,15 @@
-int rad = 60;        // Bredde
+float rad = 60;        // Bredde
 float xpos, ypos;    // Start position  
 
-float xspeed = 2.8;  // Hastighed på x-akse
-float yspeed = 2.2;  // Hastighed på y-akse
+float xspeed = 3;  // Hastighed på x-akse
+float yspeed = 2.5;  // Hastighed på y-akse
 
 int xdirection = 1;  // Venstre eller Højre
 int ydirection = 1;  // Toppen eller Bunden
 
-int c = 500;
-int d = 500;
+int c = 250;
+int d = 250;
+int e = 0;
 
 
 void setup() 
@@ -25,27 +26,38 @@ void draw()
 {
   background(0);
   
-  rectMode(CENTER);
+  rectMode(RADIUS);
   fill(100);
   rect(250, 250, c, d);
   
   c = c - 1;
   d = d - 1;
+  e = e + 1;
+  
+  // Radius af cirkel bliver mindre
+  rad = rad - 0.25;
   
   // Opdater positionen af cirklen
   xpos = xpos + ( xspeed * xdirection );
   ypos = ypos + ( yspeed * ydirection );
   
   // Tjekker om cirklen har ramt væggene
-  // If it does, reverse its direction by multiplying by -1
-  if (xpos > c-rad || c < rad) {
+  if (xpos > c + 250 - rad || e > xpos-rad) {
     xdirection *= -1;
   }
-  if (ypos > d-rad || d < rad) {
+  if (ypos > d + 250 - rad || e > ypos-rad) {
     ydirection *= -1;
   }
+  
+  if (e >= 250) {
+    c = 250;
+    d = 250;
+    e = 0;
+    rad = 60;
+  }
 
-  // Draw the shape
+println(e);
+  // Tegner en hvid cirkel
   fill(255);
   ellipse(xpos, ypos, rad, rad);
 }
