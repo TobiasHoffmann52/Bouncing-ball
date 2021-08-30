@@ -1,47 +1,51 @@
-/**
- * Bounce. 
- * 
- * When the shape hits the edge of the window, it reverses its direction. 
- */
- 
-int rad = 60;        // Width of the shape
-float xpos, ypos;    // Starting position of shape    
+int rad = 60;        // Bredde
+float xpos, ypos;    // Start position  
 
-float xspeed = 2.8;  // Speed of the shape
-float yspeed = 2.2;  // Speed of the shape
+float xspeed = 2.8;  // Hastighed på x-akse
+float yspeed = 2.2;  // Hastighed på y-akse
 
-int xdirection = 1;  // Left or Right
-int ydirection = 1;  // Top to Bottom
+int xdirection = 1;  // Venstre eller Højre
+int ydirection = 1;  // Toppen eller Bunden
+
+int c = 500;
+int d = 500;
 
 
 void setup() 
 {
-  size(640, 360);
+  size(500, 500);
   noStroke();
   frameRate(30);
   ellipseMode(RADIUS);
-  // Set the starting position of the shape
   xpos = width/2;
   ypos = height/2;
 }
 
 void draw() 
 {
-  background(102);
+  background(0);
   
-  // Update the position of the shape
+  rectMode(CENTER);
+  fill(100);
+  rect(250, 250, c, d);
+  
+  c = c - 1;
+  d = d - 1;
+  
+  // Opdater positionen af cirklen
   xpos = xpos + ( xspeed * xdirection );
   ypos = ypos + ( yspeed * ydirection );
   
-  // Test to see if the shape exceeds the boundaries of the screen
+  // Tjekker om cirklen har ramt væggene
   // If it does, reverse its direction by multiplying by -1
-  if (xpos > width-rad || xpos < rad) {
+  if (xpos > c-rad || c < rad) {
     xdirection *= -1;
   }
-  if (ypos > height-rad || ypos < rad) {
+  if (ypos > d-rad || d < rad) {
     ydirection *= -1;
   }
 
   // Draw the shape
+  fill(255);
   ellipse(xpos, ypos, rad, rad);
 }
