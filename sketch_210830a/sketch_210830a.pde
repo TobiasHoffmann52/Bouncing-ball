@@ -1,26 +1,27 @@
-float rad = 60;        // Bredde
-float xpos, ypos;    // Start position  
+float rad = 60;  // Radius af cirkel
+float xpos, ypos;  // Start position  
 
 float xspeed = 3;  // Hastighed på x-akse
 float yspeed = 2.5;  // Hastighed på y-akse
 
 int xdirection = 1;  // Venstre eller Højre
-int ydirection = 1;  // Toppen eller Bunden
+int ydirection = 1;  // Opad eller Nedad
 
-int c = 250;
-int d = 250;
-int e = 0;
+float c = 250;  // Bredde af firkant 
+float d = 250;  // Højde af firkant
+int e = 0;  // Tal der symboliserer koordinaterne for venstre og øverste kant i firkanten
 
 
 void setup() 
 {
   size(500, 500);
-  noStroke();
+  noStroke();  // Ingen kanter på figurer
   frameRate(30);
-  ellipseMode(RADIUS);
-  xpos = width/2;
-  ypos = height/2;
+  ellipseMode(RADIUS);  // Firkanten bliver tegnet ud fra midten
+  xpos = width/2;  // Starter cirklen i midten på x-aksen
+  ypos = height/2;  // Starter cirklen i midten på y-aksen
 }
+
 
 void draw() 
 {
@@ -30,6 +31,7 @@ void draw()
   fill(100);
   rect(250, 250, c, d);
   
+  // Firkanten bliver mindre
   c = c - 1;
   d = d - 1;
   e = e + 1;
@@ -42,13 +44,24 @@ void draw()
   ypos = ypos + ( yspeed * ydirection );
   
   // Tjekker om cirklen har ramt væggene
-  if (xpos > c + 250 - rad || e > xpos-rad) {
+  if (xpos > c + 250 - rad) {
     xdirection *= -1;
+    xpos = xpos - 2;
   }
-  if (ypos > d + 250 - rad || e > ypos-rad) {
+  if (e > xpos-rad) {
+    xdirection *= -1;
+    xpos = xpos + 2;
+  }
+  if (ypos > d + 250 - rad) {
     ydirection *= -1;
+    ypos = ypos - 2;
+  }
+  if (e > ypos-rad) {
+    ydirection *= -1;
+    ypos = ypos + 2;
   }
   
+  // Starter forfra når firkanten er nået midten
   if (e >= 250) {
     c = 250;
     d = 250;
@@ -56,7 +69,6 @@ void draw()
     rad = 60;
   }
 
-println(e);
   // Tegner en hvid cirkel
   fill(255);
   ellipse(xpos, ypos, rad, rad);
